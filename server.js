@@ -1,10 +1,14 @@
+require('dotenv').config();
+
+const dbUrl = process.env.DB_URL;
+
 const express = require ('express')
 const mongoose = require ('mongoose')
 
 const app = express();
 const PORT = 3000;
 
-mongoose.connect('mongodb+srv://chosenireri42:Mureria42@social-platforms.s4sc6cs.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect( dbUrl, {
     useNewUrlParser : true,
     useUnifiedTopology :true, 
 
