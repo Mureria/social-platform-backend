@@ -9,7 +9,7 @@ const PORT = 3000;
 mongoose.connect(
   process.env.DB_URL
 )
-.then(console.log("connected to mongo"))
+.then(console.log("connected to mongooo"))
 .catch((err)=>console.log(err))
 app.listen(PORT,()=>{
   console.log("Backend is running");
