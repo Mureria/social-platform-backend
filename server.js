@@ -3,8 +3,16 @@ dotenv.config()
 
 const express = require ('express')
 const mongoose = require ('mongoose')
+
+
+
 const app = express();
 const PORT = 3000;
+
+// const User = require('./model/user');
+// const Post = require('./model/post');
+// const Comment = require('./model/comment');
+
 
 mongoose.connect(
   process.env.DB_URL
