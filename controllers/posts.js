@@ -98,4 +98,3 @@ app.get('/users/:userId/posts', async (req, res) => {
   });
 
 
-module.exports.router;

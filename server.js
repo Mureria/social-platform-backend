@@ -1,18 +1,24 @@
 const dotenv= require("dotenv");
 dotenv.config()
 
-const express = require ('express')
-const mongoose = require ('mongoose')
-
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 
 const app = express();
 const PORT = 3000;
 
-// const User = require('./model/user');
-// const Post = require('./model/post');
-// const Comment = require('./model/comment');
 
+// middleware
+app.use(bodyParser.json());
+
+app.use('/user', userRoutes);
+app.use('/post', postRoutes);
+app.use('/comment', commentRoutes);
 
 mongoose.connect(
   process.env.DB_URL

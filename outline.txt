@@ -1,0 +1,34 @@
+Layout
+
+Controllers <contain functions for CRUD operations.>
+Model <data structure and interactions with the database.>
+Middleware < functions for tasks like authentication, authorization, and request validation.>
+Routes <API endpoints for users, posts, and comments>
+server.js < Express.js server, connect to the MongoDB database, and define the main API routes.>
+
+
+CRUD functionalities for:
+// posts
+// comments
+// likes
+// followers
+
+// Register
+// register user CREATE
+// SINGLE USER GET
+// ALL USERS GET 
+// Update single user PUT
+// Delete user DELETE
+
+// Login User
+// Json Webtoken (Access)
+// username & password (bycrpt na hashpassword)
+// validation
+
+Branches
+// main
+// develop
+
+
+// POST 
+// Create single post, get all post, update post & delete post, get singler user posts, user id
