@@ -2,9 +2,11 @@ const express = require("express")
 const router = express.Router();
 const User = require('../model/user');
 
+const app = express();
+
 
 // Create a User
-app.post('/users', async (req, res) => {
+app.post('/user', async (req, res) => {
     try {
       const { name, email } = req.body;
       const user = new User({ name, email });
@@ -18,7 +20,7 @@ app.post('/users', async (req, res) => {
 
 
 // Get All Users
-app.get('/users', async (req, res) => {
+app.get('/user', async (req, res) => {
     try {
       const users = await User.find();
       res.json(users);
@@ -30,7 +32,7 @@ app.get('/users', async (req, res) => {
 
 
 // Get a User by ID
-app.get('/users/:id', async (req, res) => {
+app.get('/user/:id', async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
@@ -45,7 +47,7 @@ app.get('/users/:id', async (req, res) => {
 
 
 // Update a User by ID
-app.put('/users/:id', async (req, res) => {
+app.put('/user/:id', async (req, res) => {
     try {
       const { name, email } = req.body;
       const updatedUser = await User.findByIdAndUpdate(
@@ -66,7 +68,7 @@ app.put('/users/:id', async (req, res) => {
 
 
 // Delete a User by ID
-app.delete('/users/:id', async (req, res) => {
+app.delete('/user/:id', async (req, res) => {
     try {
       const deletedUser = await User.findByIdAndRemove(req.params.id);
       if (!deletedUser) {
@@ -79,4 +81,5 @@ app.delete('/users/:id', async (req, res) => {
     }
   });
 
-module.exports.router;
+
+
