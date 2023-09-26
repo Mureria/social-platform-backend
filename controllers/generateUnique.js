@@ -1,5 +1,5 @@
-// In a common module, e.g., randomUtils.js
-// const generateRandom4DigitNumber =async () => {
+
+// const generateRandom4DigitNumber = async () => {
 //     const digit1 = await  Math.floor(Math.random() * 10);
 //     const digit2 =await  Math.floor(Math.random() * 10);
 //     const digit3 =await Math.floor(Math.random() * 10);
@@ -12,4 +12,4 @@
 
 // module.exports = {
 //     generateRandom4DigitNumber,
-// };
+};
