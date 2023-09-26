@@ -8,10 +8,12 @@ server.js < Express.js server, connect to the MongoDB database, and define the m
 
 
 CRUD functionalities for:
+// users
 // posts
 // comments
 // likes
 // followers
+Additional features
 
 // Register
 // register user CREATE

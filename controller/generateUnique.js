@@ -12,4 +12,4 @@
 
 // module.exports = {
 //     generateRandom4DigitNumber,
-};
+// };
