@@ -44,9 +44,8 @@ const CreateUser = async(req,res)=>{
             return res.status(201).json(user);
         }
     } catch (e) {
-        console.log("An error occurred saving the user", e);
         return res.status(500).json({
-            "msg": "Internal server error"
+            "msg": "An error occurred saving the user",e
         });
     }
 }
@@ -55,13 +54,18 @@ const CreateUser = async(req,res)=>{
 
 // Get All Users
 const GetUsers = async(req,res)=>{
-    const  query = req.query.newUser
+    
     try{
-      const users=query ? await User.find().sort({_id:-1}).limit(5): 
-      await User.find();
-      res.status(200).json(users);
+      const users= await User.find().sort({_id:-1})
+      if (users){
+
+          res.status(200).json(users);
+      } 
+      else{
+        res.status(404).json({"msg":"users not found!"});
+      }
     }catch(err){
-      res.status(500).json('No Added Users')
+      res.status(500).json('An error occurred getting users')
     };
 }
 
@@ -83,29 +87,42 @@ const SingleUser = async(req,res)=>{
 
 
 
-//   Update User
-const UpdateUser = async(req, res) => {
-    const user = await User.findById(req.params._id)  
-   
-       if (user) {
-           user.firstName = req.body.firstName || user.firstName
-           user.lastName = req.body.lastName || user.lastName
-           user.email = req.body.email || user.email
-           user.phoneNumber = req.body.phoneNumber || user.phoneNumber
-   
-           const updatedUser = await user.save()
-           res.json({
-               firstName:updatedUser.firstName,
-               lastName:updatedUser.lastName,
-               email:updatedUser.email,
-               phoneNumber:updatedUser.phoneNumber,
-           })
-           return res.status(201).json(updatedUser);
-   
-       }else{
-           res.status(404).json('User To Be Updated Not Found')
-       }
-     }
+// 
+const UpdateUser=async(req,res)=>{
+    id = req.params.id
+    try{
+
+        let detailsToUpdate = req.body
+        if (!detailsToUpdate){
+            return res.status(400).json({
+                "msg": "User details required"
+        })
+        
+
+
+    }
+    const updatedUser = await User.findOneAndUpdate(
+        { _id: id }, // Query criteria to find the user by ID
+        detailsToUpdate, // Updated user details
+        { new: true } // Option to return the updated document
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).json({
+          msg: 'User not found',
+        });
+      }
+  
+      res.status(200).json({
+        msg: 'User updated successfully',
+        user: updatedUser,
+      });
+    }catch (e) {
+        return res.status(500).json({
+            "msg": "An error occurred updating the user"
+        });
+    }
+}
 
 // Delete User
 const DeleteUser = async(req,res)=>{
