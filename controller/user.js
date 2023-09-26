@@ -1,5 +1,5 @@
-const User = require('../models/users')
-const {hashPassword} = require('../controllers/hashPassword')
+const User = require('../model/users')
+const {hashPassword} = require('./hashPassword')
 
 
 // Create User
@@ -24,7 +24,7 @@ const CreateUser = async(req,res)=>{
     
             // Proceed with user creation or other logic here
             //generate user code and add it to the user object
-            Code = `${req.body.firstName}`
+            userCode = `${req.body.firstName}`
             userName= `${req.body.firstName}${req.body.lastName} `
             newPassword = await hashPassword(req.body.password)
 

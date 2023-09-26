@@ -3,7 +3,7 @@ dotenv.config()
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const userRoute= require('./route/users')
+const userRoute= require('./route/users');
 
 const PORT = 3000;
 
@@ -11,7 +11,6 @@ const PORT = 3000;
 
 mongoose.connect(
   process.env.DB_URL,{
-
     w: 'majority',
   }
 )

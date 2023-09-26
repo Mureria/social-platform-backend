@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const User = require('../models/users')
-const {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser} = require('../controllers/user')
+const User = require('../model/users')
+const {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser} = require('../controller/user')
 
 // Defining routes
 

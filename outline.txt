@@ -12,6 +12,7 @@ CRUD functionalities for:
 // comments
 // likes
 // followers
+Additional features
 
 // Register
 // register user CREATE
