@@ -35,6 +35,7 @@ const CreateUser = async(req,res)=>{
                 userCode
 
             };
+
            
             // Example: Creating a new user and saving it to the database
             const user = new User(data);
