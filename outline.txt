@@ -26,6 +26,7 @@ Additional features
 // Json Webtoken (Access)
 // username & password (bycrpt na hashpassword)
 // validation
+//edge cases
 
 Branches
 // main
@@ -34,3 +35,7 @@ Branches
 
 // POST 
 // Create single post, get all post, update post & delete post, get singler user posts, user id
+
+//comment
+//created at:
+
