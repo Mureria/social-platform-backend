@@ -3,6 +3,8 @@ dotenv.config()
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
 
 const authRoute= require('./route/auth')
 const userRoute= require('./route/users');
@@ -20,13 +22,11 @@ mongoose.connect( process.env.DB_URL,{
 .then(console.log("connected to mongooo"))
 .catch((err)=>console.log(err))
 
-
+app.use(bodyParser.json());
 app.use(express.json())
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use("/login", authRoute)
-
-
 app.use("/users",userRoute);
 app.use("/comments",commentRoute);
 app.use("/posts",postRoute);
