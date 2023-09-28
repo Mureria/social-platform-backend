@@ -40,6 +40,7 @@ const CreateUser = async(req,res)=>{
             // Example: Creating a new user and saving it to the database
             const user = new User(data);
             await user.save();
+
     
             // Respond with a success message or the newly created user
             return res.status(201).json(user);

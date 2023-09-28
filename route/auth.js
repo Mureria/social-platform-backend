@@ -1,24 +1,29 @@
+const dotenv= require("dotenv");
+dotenv.config()
 const router = require('express').Router()
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const User = require('../model/users')
 
 
 // Login
-router.post("/login", async (req, res) => {
-    try {
-      // Get user input
-      const { email, password } = req.body;
-  
-      // Validate user input
-      if (!(email && password)) {
-        res.status(400).send("All input is required");
-      }
-      // Validate if user exist in our database
-      const user = await User.findOne({ email });
-  
-      if (user && (await bcrypt.compare(password, user.password))) {
-        // Create token
+router.post('/login', async(req, res) =>{
+   try{
+    const user = req.body;
+
+    const existingUser = await User.findOne({ email: user.email });
+    
+      if (!existingUser) {
+        return res.status(409).json({
+                    "msg": "User not found"
+                });
+     }
+     else{
+        // match and compare password
+        const validPassword = await bcrypt.compare(req.body.password, existingUser.password);
+        if(validPassword){
+
+             // Create token
         const token = jwt.sign(
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
@@ -26,17 +31,18 @@ router.post("/login", async (req, res) => {
             expiresIn: "2h",
           }
         );
-  
-        // save user token
+
+        // save token
         user.token = token;
-  
-        // user
         res.status(200).json(user);
-      }
-      res.status(400).send("Invalid Credentials");
-    } catch (err) {
-      console.log(err);
+
+        }
     }
-  });
+      
+   }catch{
+        
+
+   }
+})
 
 module.exports=router
