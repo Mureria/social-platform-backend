@@ -1,5 +1,6 @@
 const User = require('../model/users')
 const {hashPassword} = require('./hashPassword')
+const jwt = require('jsonwebtoken')
 
 
 // Create User
@@ -32,11 +33,10 @@ const CreateUser = async(req,res)=>{
                 ...newUser,
                 password:newPassword,
                 userName,
-                userCode
+                userCode,
 
             };
 
-           
             // Example: Creating a new user and saving it to the database
             const user = new User(data);
             await user.save();

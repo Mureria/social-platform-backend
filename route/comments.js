@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const Comment = require('../model/comments')
 const Post = require('../model/posts')
+const {verifyToken} = require('../middleware/auth')
 
 // Define Routes
 
 // Create a new comment with an author (assuming 'authorId' is the ObjectId of the user)
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   try {
     const { text, authorId, likes } = req.body;
 
@@ -29,7 +30,7 @@ router.post('/', async (req, res) => {
 
 
 // DELETE a comment by ID
-router.delete('/:commentId', async (req, res) => {
+router.delete('/:commentId',   async (req, res) => {
     try {
       const commentId = req.params.commentId;
   
@@ -53,7 +54,7 @@ router.delete('/:commentId', async (req, res) => {
 
 
 // GET all comments for a particular post by post ID
-router.get('/:postId/comments', async (req, res) => {
+router.get('/:postId', async (req, res) => {
     try {
       const postId = req.params.postId;
   

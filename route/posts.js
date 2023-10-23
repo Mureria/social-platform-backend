@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const Post = require('../model/posts')
+const {verifyToken} = require('../middleware/auth')
 
 // Define Routes
 
 
 // CREATE: Create a new post
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     try {
       const { content, authorId, comments, likes  } = req.body;
   
@@ -51,7 +52,7 @@ router.post('/', async (req, res) => {
   });
   
   // UPDATE: Update an post by ID
-  router.put('/:itemId', async (req, res) => {
+  router.put('/:postId',  verifyToken, async (req, res) => {
     try {
       const postId = req.params.postId;
       const { content, author } = req.body;
@@ -73,7 +74,7 @@ router.post('/', async (req, res) => {
   });
   
   // DELETE: Delete a post by ID
-  router.delete('/:itemId', async (req, res) => {
+  router.delete('/:itemId',  verifyToken, async (req, res) => {
     try {
       const postId = req.params.postId;
       const post = await Post.findByIdAndRemove(postId);
