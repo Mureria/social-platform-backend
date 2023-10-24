@@ -10,6 +10,7 @@ const authRoute= require('./route/auth')
 const userRoute= require('./route/users');
 const commentRoute= require('./route/comments');
 const postRoute= require('./route/posts');
+const likeRoute= require('./route/likes');
 
 const PORT = 3000;
 
@@ -22,14 +23,17 @@ mongoose.connect( process.env.DB_URL,{
 .then(console.log("connected to mongooo"))
 .catch((err)=>console.log(err))
 
+app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.json())
+app.use(bodyParser.json());
+
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use("/login", authRoute)
 app.use("/users",userRoute);
 app.use("/comments",commentRoute);
 app.use("/posts",postRoute);
+app.use("/likes",likeRoute);
 
 
 app.get('/',  (req, res) => {
