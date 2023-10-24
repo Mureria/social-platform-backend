@@ -1,4 +1,9 @@
-const jw = require("jsonwebtoken");
+const dotenv= require("dotenv");
+dotenv.config()
+const User = require('../model/users')
+
+
+const jwt = require("jsonwebtoken");
 
 // Middleware to verify JWT
 const verifyToken = (req, res, next) => {
@@ -6,15 +11,19 @@ const verifyToken = (req, res, next) => {
   
     if (!token) {
       return res.status(401).json({ message: 'Token is missing' });
+     
     }
-  
     try {
-      const decoded = jw.verify(token, secretKey);
-      req.user = decoded; // Add user information to the request object
-      next();
+      const decoded = jwt.verify(token, TOKEN_KEY);
+      req.user = decoded; 
+      return  next();
+
+      // Add user information to the request object
+     
     } catch (error) {
       return res.status(401).json({ message: 'Invalid token' });
     }
+    
   }
 
   module.exports = {verifyToken}
