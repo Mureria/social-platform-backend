@@ -4,14 +4,22 @@ const User = require('../model/users')
 
 
 const commentSchema = new mongoose.Schema({
-  text:String,
-  likes:Number,
-author: {
+  text:{
+    type:String
+  },
+
+  likes:{
+  type:Number
+  },
+
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User, 
     required: true,
-  },
-}, {timestamps: true});
+  }
+}, 
+
+{timestamps: true});
 
 
 
