@@ -25,9 +25,7 @@ mongoose.connect( process.env.DB_URL,{
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.json());
 
-app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use("/login", authRoute)
 app.use("/users",userRoute);
@@ -35,10 +33,6 @@ app.use("/comments",commentRoute);
 app.use("/posts",postRoute);
 app.use("/likes",likeRoute);
 
-
-app.get('/',  (req, res) => {
-  res.render('index.ejs')
-})
 
 app.listen(PORT,()=>{
   console.log(`Backend is running on port ${PORT}`);

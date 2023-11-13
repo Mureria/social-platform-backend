@@ -223,4 +223,46 @@ router.post("/login", async (req, res) => {
     }
   });
 
+
+
+
+
+
+
+MERN Stack
+
+mongoose/express/react/node
+
+Cors
+cross origin resource sharing
+
+axios
+
+link front na Backend
+
+
+
+Backend
+
+server
+
+model//mongoose//MongoDB//graphql//mysql// characteristics<database>
+
+route//express//<routing/url>
+
+controller//functions//
+
+
+
+
+
+
+
+
+
+
+
+
+
+Backend
  

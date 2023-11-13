@@ -64,7 +64,7 @@ const GetUsers = async(req,res)=>{
           res.status(200).json(users);
       } 
       else{
-        res.status(404).json({"msg":"users not found!"});
+        res.status(404).json({"msg":"Hakuna kitu kama hio we mzee!"});
       }
     }catch(err){
       res.status(500).json('An error occurred getting users')
@@ -129,7 +129,9 @@ const UpdateUser=async(req,res)=>{
 // Delete User
 const DeleteUser = async(req,res)=>{
     try{
+      console.log(req.params.id)
       await  User.findByIdAndDelete(req.params.id);
+
       res.status(200).json("User has been deleted")
     }catch(err){
       res.status(500).json(err)

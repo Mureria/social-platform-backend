@@ -5,7 +5,7 @@ const User = require('../model/users')
 
 const likeSchema = new mongoose.Schema({
   likes:Number,
-author: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User, 
     required: true,
