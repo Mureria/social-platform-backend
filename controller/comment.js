@@ -15,13 +15,13 @@ const CreateComment = async (req, res) => {
       await comment.save();
   
       // Populate the 'author' field to get the user's name
-      await comment.populate('author', 'firstName').execPopulate();
+      await comment.populate( 'firstName');
   
       // Respond with the created comment, now including the user's name
       res.status(201).json(comment);
     } catch (error) {
       // Handle errors (e.g., validation errors)
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error.messag });
     }
   };
 

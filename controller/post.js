@@ -14,7 +14,8 @@ const CreatePost = async (req, res) => {
       await post.save();
 
       // Populate the 'author' field to get the user's name
-    //   await post.populate('author', 'firstName').execPopulate();
+      await post.populate('author', 'firstName')
+      .populate('comment', 'text');
   
       res.status(201).json(post); // Respond with the created post
     } catch (error) {
@@ -57,7 +58,7 @@ const UpdatePost = async (req, res) => {
     try {
       const postId = req.params.postId;
       const { content, author } = req.body;
-  
+      
       const post = await Post.findByIdAndUpdate(
         this.postId,
         { content, author },

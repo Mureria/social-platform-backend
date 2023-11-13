@@ -6,7 +6,7 @@ const { verifyToken } = require('../middleware/auth');
 // Define Routes
 
 // Create a new comment with an author
-router.post('/', verifyToken,  CreateComment );
+router.post('/',   CreateComment );
 
 // GET all comments for a particular post by post ID
 router.get('/:postId', AllComments);

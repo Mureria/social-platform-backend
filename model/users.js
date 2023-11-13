@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({ 
+
     firstName:{
         type:String,
         required:true
@@ -27,9 +28,18 @@ const UserSchema = new mongoose.Schema({
     userCode:{
         type:String
     },
+
+    role: {
+        type: String,
+        Enumerator: ['user', 'admin', 'organizer'],
+        default:'user'
+    },
+
     token: {
         type:String
-    }    
+    },  
+    
+  
 },{timestamps:true})
 
 module.exports=mongoose.model("users",UserSchema)

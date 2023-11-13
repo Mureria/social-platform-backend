@@ -17,7 +17,7 @@ router.post('/', async(req, res) =>{
     
       if (!existingUser) {
         return res.status(409).json({
-                    "msg": "Invalid Credentials"
+                    "msg": "Invalid Credentials mzee"
                 });
      }
      else{
@@ -30,12 +30,12 @@ router.post('/', async(req, res) =>{
           { user_id: user._id, email:user.email },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "2h",
+            expiresIn: "2sec",
           }
         );
 
         // save token
-        user.token = token;
+        user.token = token
         res.status(200).json(user);
 
         }

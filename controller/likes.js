@@ -1,13 +1,18 @@
 const Likes = require('../model/likes')
 const Post = require('../model/posts')
 
+// CreateLike
 
 const CreateLike =async (req, res) => {
     try {
       const { user, postId } = req.body;
-      const like = new Like({ user, postId });
+
+      const like = new Likes({ user, postId });
+
       const savedLike = await like.save();
+
       res.json(savedLike);
+      
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -34,7 +39,7 @@ const GetLikes = async (req, res) => {
     res.status(200).json(likes);
   } catch (error) {
     // Handle errors (e.g., validation errors or server errors)
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Server error kabisa' });
   }
 };
 
@@ -43,7 +48,7 @@ const GetLikes = async (req, res) => {
 // Delete Like
 const DeleteLike = async (req, res) => {
     try {
-      await Like.findByIdAndRemove(req.params.likeId);
+      await Likes.findByIdAndRemove(req.params.likeId);
       res.json({ message: 'Like deleted' });
     } catch (err) {
       res.status(500).json({ error: err.message });
