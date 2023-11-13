@@ -6,16 +6,16 @@ const Post = require('../model/posts')
 
 const CreateComment = async (req, res) => {
     try {
-      const { text, authorId, likes } = req.body;
+      const { text, author, likes } = req.body;
   
       // Create a new Comment instance
-      const comment = new Comment({ text, author: authorId, likes });
-   ''
+      const comment = new Comment({ text, author, likes });
+      
       // Save the comment t o the database
       await comment.save();
   
       // Populate the 'author' field to get the user's name
-      await comment.populate( 'firstName');
+      (await comment.populate( 'author', 'firstName'));
   
       // Respond with the created comment, now including the user's name
       res.status(201).json(comment);
