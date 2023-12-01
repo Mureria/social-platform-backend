@@ -137,4 +137,19 @@ const DeleteUser = async(req,res)=>{
       res.status(500).json(err)
     }
   }
-  module.exports = {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser}
+
+
+  const userCount = async (req, res) => {
+    try {
+        const userCount = await User.countDocuments();
+  
+        if (!userCount) {
+            return res.status(500).json('No users');
+        }
+  
+        res.status(200).json(`${userCount} users`);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+  module.exports = {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser, userCount}

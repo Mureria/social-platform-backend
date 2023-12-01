@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../model/users')
+const Post = require('../model/posts')
 
 
 
@@ -10,6 +11,10 @@ const likeSchema = new mongoose.Schema({
     ref: User, 
     required: true,
   },
+  postId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Post, 
+  }
 }, {timestamps: true});
 
 

@@ -5,25 +5,39 @@ const Post = require('../model/posts')
 // Create a comment
 
 const CreateComment = async (req, res) => {
-    try {
-      const { text, authorId, likes } = req.body;
-  
-      // Create a new Comment instance
-      const comment = new Comment({ text, author: authorId, likes });
-   ''
-      // Save the comment t o the database
-      await comment.save();
-  
-      // Populate the 'author' field to get the user's name
-      await comment.populate( 'firstName');
-  
-      // Respond with the created comment, now including the user's name
-      res.status(201).json(comment);
-    } catch (error) {
-      // Handle errors (e.g., validation errors)
-      res.status(400).json({ error: error.messag });
+  try {
+    const postId = req.params.postId;
+    
+    const { text, author } = req.body;
+
+    // Find the post by its ID
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
     }
-  };
+
+    // Create a new Comment instance
+    const comment = new Comment({ text, author });
+
+    // Save the comment to the database
+    await comment.save();
+
+    // Add the comment to the 'comments' array of the post
+    post.comments.push(comment._id);
+    await post.save();
+
+    // Populate the 'author' field to get the user's name
+    await comment.populate('author', 'firstName');
+
+    // Respond with the created comment, now including the user's name
+    res.status(201).json(comment);
+  } catch (error) {
+    // Handle errors (e.g., validation errors)
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 
 // GET all comments for a particular post by post ID
@@ -36,19 +50,20 @@ const CreateComment = async (req, res) => {
       // Find the post by its ID
       const post = await Post.findById(postId);
   
-      if (!post) {
+      if (!post || post.length === 0) {
         // If the post doesn't exist, return a 404 Not Found response
-        return res.status(404).json({ error: 'Post not found' });
+        return res.status(404).json({ error: 'Posts not found' });
       }
   
           // Find all comments associated with the post
-    const comments = await Comment.find({ postId: postId });
+    const comments = await Comment.find()
+    .populate('author', 'userName');
   
     // Respond with the comments for the post
     res.status(200).json(comments);
   } catch (error) {
     // Handle errors (e.g., validation errors or server errors)
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Server errorsss' });
   }
   };
 

@@ -8,10 +8,6 @@ const commentSchema = new mongoose.Schema({
     type:String
   },
 
-  likes:{
-  type:Number
-  },
-
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User, 

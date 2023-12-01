@@ -21,7 +21,9 @@ const postSchema = new mongoose.Schema({
     ref: Comments,
   }],
 
-  likes:Number
+  likes:[{
+    type: Number,
+  default:0}]
   
 },{timestamps:true}
 );
