@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const User = require('../model/users')
-const {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser} = require('../controller/user')
+const {CreateUser, GetUsers, SingleUser, UpdateUser, DeleteUser, userCount} = require('../controller/user')
 
 // Defining routes
 
@@ -21,5 +21,8 @@ router.put('/:id', UpdateUser);
 
 // delete a user 
 router.delete("/:id", DeleteUser );
+
+// Get number of users
+router.get(`/get/count`, userCount);
 
 module.exports=router

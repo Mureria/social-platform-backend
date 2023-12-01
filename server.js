@@ -12,7 +12,7 @@ const commentRoute= require('./route/comments');
 const postRoute= require('./route/posts');
 const likeRoute= require('./route/likes');
 
-const PORT = 3000;
+const PORT = 5000;
 
 
 
