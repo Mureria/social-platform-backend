@@ -1,58 +1,87 @@
-const Likes = require('../model/likes')
-const Post = require('../model/posts')
+const Like = require('../model/likes');
+const Post = require('../model/posts');
 
-// CreateLike
 
-const CreateLike =async (req, res) => {
-    try {
-      const { user, postId } = req.body;
+// Create a like
+const LikePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const author = req.body; 
 
-      const like = new Likes({ user, postId });
+    const post = await Post.findById(postId);
 
-      const savedLike = await like.save();
-
-      res.json(savedLike);
-      
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
     }
-  };
 
-//   Get All Likes for a POst
+    const existingLike = await Like.findOne( author );
 
-const GetLikes = async (req, res) => {
-    try {
-      const postId = req.params.postId;
-  
-      // Find the post by its ID
-      const post = await Post.findById(postId);
-  
-      if (!post) {
-        // If the post doesn't exist, return a 404 Not Found response
-        return res.status(404).json({ error: 'Unavailable' });
-      }
-  
-          // Find all likes associated with the post
-    const likes = await Likes.find({ postId: postId });
+    if (existingLike) {
+      return res.status(400).json({ error: 'You have already liked this post' });
+    }
 
-    // Respond with the likes for the post
-    res.status(200).json(likes);
+    const like = new Like( author );
+
+    await like.save();
+
+    post.likes.push(like._id);
+
+    await post.save();
+
+    await like.populate('author', 'userName');
+
+    res.status(201).json(like);
   } catch (error) {
-    // Handle errors (e.g., validation errors or server errors)
-    res.status(500).json({ error: 'Server error kabisa' });
+    res.status(400).json({ error: error.message });
   }
 };
 
 
+// Delete a like
+const unlikePost = async (req, res) => {
+  try {
+    const likeId = req.params.likeId;
 
-// Delete Like
-const DeleteLike = async (req, res) => {
-    try {
-      await Likes.findByIdAndRemove(req.params.likeId);
-      res.json({ message: 'Like deleted' });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+    // Find the like by its ID and remove it
+    const deletedLike = await Like.findByIdAndRemove(likeId);
+
+    if (!deletedLike) {
+
+      return res.status(404).json('Like not found');
     }
-  };
 
-  module.exports = {CreateLike, GetLikes, DeleteLike }
+    res.status(200).json('Like deleted successfully');
+  } catch (error) {
+    res.status(500).json('Server error');
+  }
+};
+
+// Get all likes for a post
+const GetLikesForPost = async (req, res) => {
+  const postId = req.params.postId; 
+
+  try {
+    const post = await Post.findById(postId)
+      .populate({
+        path: 'likes',
+        populate: {
+          path: 'author',
+          select: 'userName -_id'
+        },
+      });
+
+      if (!post || post.length === 0) {
+        // If the post doesn't exist, return a 404 Not Found response
+        return res.status(404).json('No Like ');
+      }
+    const likes = post.likes;
+
+    res.status(200).json(likes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server error');
+  }
+};
+
+
+module.exports = {LikePost, unlikePost, GetLikesForPost}

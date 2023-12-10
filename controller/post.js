@@ -37,15 +37,22 @@ const CreatePost = async (req, res) => {
 const GetPosts =  async (req, res) => {
     try {
       const posts = await Post.find()
-      .populate('author', 'firstName')
+      .populate('author', 'userName')
       .populate({
         path: 'comments',
         populate: {
           path: 'author',
-          select: 'userName',
+          select: 'userName -_id'
         },
-        select: 'text'
+      })
+      .populate({
+        path: 'likes',
+        populate: {
+          path: 'author',
+          select: 'userName -_id' 
+        },
       });
+          
 
       if (!posts || posts.length === 0) {
         return res.status(200).json('No Posts!');
@@ -66,14 +73,20 @@ const SinglePost = async (req, res) => {
 
     const posts = await Post.find(postId)
     .populate('author', 'firstName')
-      .populate({
-        path: 'comments',
-        populate: {
-          path: 'author',
-          select: 'userName',
-        },
-        select: 'text'
-      });
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        select: 'userName -_id'
+      },
+    })
+    .populate({
+      path: 'likes',
+      populate: {
+        path: 'author',
+        select: 'userName -_id' 
+      },
+    });
 
     if (!posts || posts.length === 0) {
       return res.status(200).json('No Posts!');
@@ -130,42 +143,9 @@ const DeletePost = async (req, res) => {
 
 
 
-  // Like a post
- const LikePost =  async (req, res) => {
-    try {
-      const postId = req.params.id;
-      
-      // Find the post by its ID and update the 'likes' field
-      const likedPost = await Post.findByIdAndUpdate(
-        postId,
-        { $push: { likes: req.body.userId } },
-        { new: true }
-      );
+
+
   
-      res.status(200).json(likedPost);
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-    }
-  };
-
-  // Unlike a post
- const UnlikePost  =  async (req, res) => {
-    try {
-      const postId = req.params.postId;
-      
-      // Find the post by its ID and update the 'likes' field
-      const unlikedPost = await Post.findByIdAndUpdate(
-        postId,
-        { $pull: { likes: req.body.userId } },
-        { new: true }
-      );
-  
-      res.status(200).json(unlikedPost);
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-    }
-  }
 
 
-
-module.exports = {CreatePost, GetPosts, SinglePost, UpdatePost, DeletePost, LikePost, UnlikePost}
+module.exports = {CreatePost, GetPosts, SinglePost, UpdatePost, DeletePost}

@@ -52,18 +52,22 @@ const CreateComment = async (req, res) => {
   
       if (!post || post.length === 0) {
         // If the post doesn't exist, return a 404 Not Found response
-        return res.status(404).json({ error: 'Posts not found' });
+        return res.status(404).json('Posts not found');
       }
   
           // Find all comments associated with the post
     const comments = await Comment.find()
     .populate('author', 'userName');
+
+    if(!comments || comments.length === 0 ){
+      return res.status(200).json('No comments at the moment');
+    }
   
     // Respond with the comments for the post
     res.status(200).json(comments);
   } catch (error) {
     // Handle errors (e.g., validation errors or server errors)
-    res.status(500).json({ error: 'Server errorsss' });
+    res.status(500).json('Server errorsss');
   }
   };
 
@@ -81,14 +85,14 @@ const CreateComment = async (req, res) => {
   
       if (!deletedComment) {
         // If the comment doesn't exist, return a 404 Not Found response
-        return res.status(404).json({ error: 'Comment not found' });
+        return res.status(404).json('Comment not found');
       }
   
       // Respond with a success message or the deleted comment
-      res.status(200).json({ message: 'Comment deleted successfully' });
+      res.status(200).json('Comment deleted successfully');
     } catch (error) {
       // Handle errors (e.g., validation errors or server errors)
-      res.status(500).json({ error: 'Server error' });
+      res.status(500).json('Server error');
     }
   }
 

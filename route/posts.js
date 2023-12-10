@@ -21,14 +21,5 @@ router.post('/', CreatePost );
   // DELETE: Delete a post by ID
   router.delete('/:postId',  DeletePost);
   
-  // Like a post
-  router.post('/like/:postId', LikePost);
-  
-  // Unlike a post
-  router.post('/unlike/:postId', UnlikePost);
-  
-  module.exports = router;
-  
-
   
   module.exports = router;

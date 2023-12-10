@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../model/users')
 const Comments = require('../model/comments')
+const Likes = require('../model/likes')
 
 
 
@@ -22,8 +23,9 @@ const postSchema = new mongoose.Schema({
   }],
 
   likes:[{
-    type: Number,
-  default:0}]
+  type: mongoose.Schema.Types.ObjectId,
+  ref: Likes,
+}]
   
 },{timestamps:true}
 );

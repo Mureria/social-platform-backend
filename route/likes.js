@@ -1,19 +1,17 @@
 const router = require('express').Router()
-const { CreateLike, GetLikes, DeleteLike } = require('../controller/likes');
-const Likes = require('../model/likes')
-const Post = require('../model/posts')
+const { unlikePost, LikePost, GetLikesForPost } = require('../controller/likes');
 
 
 // Define Routes
 
 // CREATE: Create a new like
-router.post('/', CreateLike );
+router.post('/:postId', LikePost );
 
 // Get likes for a post
-router.get('/:postId', GetLikes );
+router.get('/:postId', GetLikesForPost );
 
 // Remove Like
-router.delete('/:likeId', DeleteLike );
+router.delete('/:likeId', unlikePost );
 
 
 module.exports=router
