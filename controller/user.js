@@ -77,8 +77,7 @@ const SingleUser = async(req,res)=>{
     try{
       const person =await User.findById(req.params
         .id)
-        //destructuring the user details and removing the password
-        // and return it in a doc form displaying other details beside password.
+        
         const {password ,...others}=person._doc
         res.status(200).json(person)
     }catch (err){
@@ -104,9 +103,9 @@ const UpdateUser=async(req,res)=>{
 
     }
     const updatedUser = await User.findOneAndUpdate(
-        { _id: id }, // Query criteria to find the user by ID
-        detailsToUpdate, // Updated user details
-        { new: true } // Option to return the updated document
+        { _id: id }, 
+        detailsToUpdate, 
+        { new: true } 
       );
   
       if (!updatedUser) {
